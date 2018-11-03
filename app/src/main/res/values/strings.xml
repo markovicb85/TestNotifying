@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">TestNotifying</string>
+    <string name="app_name">Alarm Device</string>
     <string name="FCM_PREF">com.example.crni.testnotifying.fcm_pref</string>
     <string name="FCM_TOKEN">com.example.crni.testnotifying.fcm_token</string>
+    <string name="FCM_NAME">com.example.crni.testnotifying.fcm_name</string>
     <string name="send_token">SEND TOKEN</string>
+    <string name="back">Change device name</string>
+    <string name="insert_new_device_name">Insert new device name</string>
+    <string name="alarm">Alarm</string>
+    <string name="insert_device_name">Insert device name</string>
+    <string name="set_new_device_name">Change name</string>
 </resources>
