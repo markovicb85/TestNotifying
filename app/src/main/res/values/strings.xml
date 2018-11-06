@@ -9,4 +9,5 @@
     <string name="alarm">Alarm</string>
     <string name="insert_device_name">Insert device name</string>
     <string name="set_new_device_name">Change name</string>
+    <string name="insert_server_name">Insert server name</string>
 </resources>

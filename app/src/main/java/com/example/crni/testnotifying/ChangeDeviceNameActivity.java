@@ -34,7 +34,11 @@ public class ChangeDeviceNameActivity extends AppCompatActivity {
         }else{
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                     .putString("deviceName", newName.getText().toString()).apply();
-            startActivity(new Intent(ChangeDeviceNameActivity.this, AlarmActivity.class));
+
+            //Privremeno ubaceno, izbaciti kasnije red ispod i promeniti na AlarmActivity u drugom redu
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean("isFirstRun", true).apply();
+            startActivity(new Intent(ChangeDeviceNameActivity.this, MainActivity.class));
         }
     }
 }

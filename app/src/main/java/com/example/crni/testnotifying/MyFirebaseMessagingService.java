@@ -28,7 +28,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        String title = remoteMessage.getNotification().getTitle();
+        String title = remoteMessage.getData().get("title");
         String message = remoteMessage.getNotification().getBody();
 
         Intent intent = new Intent(this, AlarmActivity.class);
@@ -45,6 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationBilder.setContentIntent(pendingIntent);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,notificationBilder.build());
-
     }
 }
+
+
