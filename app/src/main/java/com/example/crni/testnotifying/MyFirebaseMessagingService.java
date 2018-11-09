@@ -29,7 +29,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         String title = remoteMessage.getData().get("title");
-        String message = remoteMessage.getNotification().getBody();
+        String message = remoteMessage.getData().get("body");
 
         Intent intent = new Intent(this, AlarmActivity.class);
         intent.putExtra("notification", true);

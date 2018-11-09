@@ -29,9 +29,8 @@ public class AlarmActivity extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.alarm);
         Intent intent = getIntent();
-
         Boolean notification = intent.getBooleanExtra("notification", false);
-        Toast.makeText(this, "Notification is: " + notification.toString(), Toast.LENGTH_SHORT).show();
+
         if (notification) {
             button.setEnabled(true);
         }
