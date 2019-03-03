@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -28,11 +29,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        String title = remoteMessage.getData().get("title");
-        String message = remoteMessage.getData().get("body");
+        String title = remoteMessage.getNotification().getTitle();
+        String message = remoteMessage.getNotification().getBody();
+        Bundle notify = new Bundle();
+        notify.putString("TITLE", title);
+        notify.putString("MESSAGE", message);
 
         Intent intent = new Intent(this, AlarmActivity.class);
-        intent.putExtra("notification", true);
+        intent.putExtra("NOTIFY", notify);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //TODO Ovo bi moglo da se napise malo bolje
@@ -40,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBilder = new NotificationCompat.Builder(this);
         notificationBilder.setContentTitle(title);
         notificationBilder.setContentText(message);
-        notificationBilder.setSmallIcon(R.mipmap.ic_launcher);
+        notificationBilder.setSmallIcon(R.mipmap.ic_app_icon);
         notificationBilder.setAutoCancel(true);
         notificationBilder.setContentIntent(pendingIntent);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

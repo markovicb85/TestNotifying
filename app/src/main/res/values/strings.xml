@@ -10,4 +10,7 @@
     <string name="insert_device_name">Insert device name</string>
     <string name="set_new_device_name">Change name</string>
     <string name="insert_server_name">Insert server name</string>
+    <string name="info">info</string>
+    <string name="settings">settings</string>
+    <string name="action_favorite">Delete all comments</string>
 </resources>
