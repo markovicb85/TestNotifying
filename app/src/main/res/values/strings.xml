@@ -13,4 +13,8 @@
     <string name="info">info</string>
     <string name="settings">settings</string>
     <string name="action_favorite">Delete all comments</string>
+    <string name="my_header_title">My header title</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

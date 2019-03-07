@@ -13,21 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name=".Tools.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".AlarmActivity"></activity>
-        <activity android:name=".ChangeDeviceNameActivity"></activity>
+        <activity android:name=".Activity.AlarmActivity"></activity>
+        <activity android:name=".Activity.ChangeDeviceNameActivity"></activity>
     </application>
 
 </manifest>

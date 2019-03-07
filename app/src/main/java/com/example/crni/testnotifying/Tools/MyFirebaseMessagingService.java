@@ -1,4 +1,4 @@
-package com.example.crni.testnotifying;
+package com.example.crni.testnotifying.Tools;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.example.crni.testnotifying.Activity.AlarmActivity;
+import com.example.crni.testnotifying.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

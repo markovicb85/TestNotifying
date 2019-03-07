@@ -1,4 +1,4 @@
-package com.example.crni.testnotifying;
+package com.example.crni.testnotifying.Tools;
 
 import android.content.Context;
 

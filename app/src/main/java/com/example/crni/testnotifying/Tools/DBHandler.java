@@ -1,4 +1,4 @@
-package com.example.crni.testnotifying;
+package com.example.crni.testnotifying.Tools;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
+import com.example.crni.testnotifying.Data.MyNotification;
+
+import java.util.ArrayList;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -40,7 +40,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //Add a new row to the database
-    public void addnotification(Notification notification){
+    public void addnotification(MyNotification notification){
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, notification.get_notificationTitle());
         values.put(COLUMN_TEXT, notification.get_notificationBody());
@@ -50,9 +50,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //Get value from table notifications
-    public ArrayList<Notification> notificationResults(){
-        Notification notify = new Notification();
-        ArrayList<Notification> notifications = new ArrayList<>();
+    public ArrayList<MyNotification> notificationResults(){
+        MyNotification notify = new MyNotification();
+        ArrayList<MyNotification> notifications = new ArrayList<>();
 
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NOTIFICATIONS + " WHERE 1";
@@ -63,8 +63,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
         while (!cursor.isAfterLast()){
             if (cursor.getString(cursor.getColumnIndex("title")) != null){
+                notify.set_notificationID(cursor.getString(cursor.getColumnIndex("notificationID")));
                 notify.set_notificationTitle(cursor.getString(cursor.getColumnIndex("title")));
-                notify.set_notificationTitle(cursor.getString(cursor.getColumnIndex("text")));
+                notify.set_notificationBody(cursor.getString(cursor.getColumnIndex("text")));
                 notifications.add(notify);
                 cursor.moveToNext();
             }
@@ -77,6 +78,12 @@ public class DBHandler extends SQLiteOpenHelper {
     public void deleteAlarms() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from "+ TABLE_NOTIFICATIONS);
+        db.close();
+    }
+
+    public void deleteOneAlarm(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTIFICATIONS,"notificationID = ?",new String[] {id});
         db.close();
     }
 }

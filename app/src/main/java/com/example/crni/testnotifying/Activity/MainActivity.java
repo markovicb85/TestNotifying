@@ -1,4 +1,4 @@
-package com.example.crni.testnotifying;
+package com.example.crni.testnotifying.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.crni.testnotifying.Tools.MySingleton;
+import com.example.crni.testnotifying.R;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,16 +1,26 @@
-package com.example.crni.testnotifying;
+package com.example.crni.testnotifying.Data;
 
-public class Notification {
+public class MyNotification {
 
+    private String _notificationID;
     private String _notificationTitle;
     private String _notificationBody;
 
-    public Notification() {
+    public MyNotification() {
     }
 
-    public Notification(String notificationTitle, String notificationBody) {
+    public MyNotification(String notificationID, String notificationTitle, String notificationBody) {
+        this._notificationID = notificationID;
         this._notificationTitle = notificationTitle;
         this._notificationBody = notificationBody;
+    }
+
+    public String get_notificationID() {
+        return _notificationID;
+    }
+
+    public void set_notificationID(String _notificationID) {
+        this._notificationID = _notificationID;
     }
 
     public String get_notificationTitle() {
