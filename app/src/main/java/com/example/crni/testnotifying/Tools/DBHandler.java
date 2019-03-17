@@ -51,11 +51,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //Get value from table notifications
     public ArrayList<MyNotification> notificationResults(){
-        MyNotification notify = new MyNotification();
         ArrayList<MyNotification> notifications = new ArrayList<>();
 
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NOTIFICATIONS + " WHERE 1";
+        String query = "SELECT * FROM " + TABLE_NOTIFICATIONS;
 
         //Create cursor and set to first results
         Cursor cursor = db.rawQuery(query, null);
@@ -63,6 +62,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         while (!cursor.isAfterLast()){
             if (cursor.getString(cursor.getColumnIndex("title")) != null){
+                MyNotification notify = new MyNotification();
                 notify.set_notificationID(cursor.getString(cursor.getColumnIndex("notificationID")));
                 notify.set_notificationTitle(cursor.getString(cursor.getColumnIndex("title")));
                 notify.set_notificationBody(cursor.getString(cursor.getColumnIndex("text")));
@@ -77,7 +77,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void deleteAlarms() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from "+ TABLE_NOTIFICATIONS);
+        db.execSQL("DELETE FROM " + TABLE_NOTIFICATIONS);
         db.close();
     }
 

@@ -10,11 +10,15 @@
     <string name="insert_device_name">Insert device name</string>
     <string name="set_new_device_name">Change name</string>
     <string name="insert_server_name">Insert server name</string>
-    <string name="info">info</string>
-    <string name="settings">settings</string>
+    <string name="info">Info</string>
+    <string name="settings">Settings</string>
     <string name="action_favorite">Delete all comments</string>
     <string name="my_header_title">My header title</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="alarm_list">All alarms</string>
+    <string name="proba">Ovo je proba dodatnog teksta koji salje neka soba</string>
+    <string name="alarm_icon">Alarm icon</string>
+    <string name="alarm_name">Alarm name</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.crni.testnotifying.Tools;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,24 +14,39 @@ import com.example.crni.testnotifying.R;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private ArrayList<MyAlarm> myAlarms;
+    private static ArrayList<MyAlarm> myAlarms;
+    static ItemClicked activity;
+    static MyAlarm currentItem;
+
+    public interface ItemClicked{
+        void onItemClicked(MyAlarm alarm);
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView textViewTitle;
+
         private TextView textViewMsg;
 
 
-        public MyViewHolder(View v) {
-            super(v);
+        public MyViewHolder(final View itemView) {
+            super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             textViewTitle = itemView.findViewById(R.id.textView);
             textViewMsg = itemView.findViewById(R.id.textView2);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.onItemClicked(currentItem);
+                }
+            });
         }
     }
 
-    public MyAdapter(ArrayList<MyAlarm> data) {
+    public MyAdapter(Context context, ArrayList<MyAlarm> data) {
         myAlarms = data;
+        activity = (ItemClicked) context;
     }
 
     @Override
@@ -42,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        MyAlarm currentItem = myAlarms.get(position);
+        currentItem = myAlarms.get(position);
 
         holder.imageView.setImageResource(currentItem.getImageResource());
         holder.textViewTitle.setText(currentItem.getText1());

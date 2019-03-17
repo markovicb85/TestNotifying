@@ -11,33 +11,30 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.example.crni.testnotifying.Fragment.AlarmListFragment;
+import com.example.crni.testnotifying.Fragment.AlarmFragment;
 import com.example.crni.testnotifying.Fragment.InfoFragment;
 import com.example.crni.testnotifying.Fragment.SettingsFragment;
 import com.example.crni.testnotifying.Tools.DBHandler;
-import com.example.crni.testnotifying.Tools.MyAdapter;
 import com.example.crni.testnotifying.Data.MyAlarm;
-import com.example.crni.testnotifying.Data.MyNotification;
 import com.example.crni.testnotifying.R;
+import com.example.crni.testnotifying.Tools.MyAdapter;
 
 import java.util.ArrayList;
 
-public class AlarmActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AlarmActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        MyAdapter.ItemClicked {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private DBHandler dbHandler = new DBHandler(this, null, null, 1);;
-    private MyNotification notification = new MyNotification();
+    private DBHandler dbHandler = new DBHandler(this, null, null, 1);
     private ArrayList<MyAlarm> alarms = new ArrayList<MyAlarm>();
     private DrawerLayout drawerLayout;
+
+    private TextView alarmTitle;
 
 
     @Override
@@ -45,6 +42,8 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarms_list);
+
+        alarmTitle = findViewById(R.id.tv_alarm_title);
 
         //Set the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,11 +53,6 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
-
-        //Get data from DB and insert in recyclerView
-        buildRecyclerView();
-        getAlarmsFromNotification();
-        showAlarms();
 
         //Set Navdrawer listener
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -73,8 +67,8 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new InfoFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_info);
+                    new AlarmListFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_alarm_list);
         }
     }
 
@@ -99,7 +93,8 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dbHandler.deleteAlarms();
-                        showAlarms();
+                        //TODO Ovde puca aplikacija jer u narednom koraku nekma referencu na DBhendler
+                        new AlarmListFragment().showAlarms();
                     }
                 });
                 alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -116,67 +111,28 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.nav_alarm_list:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AlarmListFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new SettingsFragment()).commit();
+                        new SettingsFragment())
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.nav_info:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new InfoFragment()).commit();
+                        new InfoFragment())
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void buildRecyclerView() {
-        recyclerView = findViewById(R.id.recyclerView_alarms);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        if (adapter == null){
-            adapter = new MyAdapter(alarms);
-        }
-        recyclerView.setAdapter(adapter);
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                String position = viewHolder.itemView.getTag().toString();
-                dbHandler.deleteOneAlarm(position);
-                alarms.remove(viewHolder.getAdapterPosition());
-                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                adapter.notifyItemRangeChanged(viewHolder.getAdapterPosition(), adapter.getItemCount());
-            }
-        }).attachToRecyclerView(recyclerView);
-    }
-
-
-    public void getAlarmsFromNotification(){
-        if (getIntent().getExtras() != null){
-            Bundle notify = getIntent().getBundleExtra("NOTIFY");
-            notification.set_notificationTitle(notify.getString("TITLE"));
-            notification.set_notificationBody(notify.getString("MESSAGE"));
-            dbHandler.addnotification(notification);
-            getIntent().removeExtra("NOTIFY");
-            showAlarms();
-        }
-    }
-
-    public void showAlarms(){
-        ArrayList<MyNotification> notifications = dbHandler.notificationResults();
-        if (!notifications.isEmpty() || notifications.size() != alarms.size()){
-            alarms.clear();
-            for (MyNotification n : notifications) {
-                alarms.add(new MyAlarm(n.get_notificationID(), R.drawable.ic_action_delete, n.get_notificationTitle(), n.get_notificationBody()));
-            }
-        }
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -186,7 +142,24 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count != 0) {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
+    @Override
+    public void onItemClicked(MyAlarm alarmData) {
+        Bundle bundle = new Bundle();
+        AlarmFragment alarm = new AlarmFragment();
+
+        bundle.putString("alarm", alarmData.getText2());
+        alarm.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                alarm)
+                .addToBackStack(null)
+                .commit();
+    }
 }
