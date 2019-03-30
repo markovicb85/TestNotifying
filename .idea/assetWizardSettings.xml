@@ -95,7 +95,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_info_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_add_alert_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -105,7 +105,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_info" />
+                            <entry key="outputName" value="ic_add_alert" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
                         </option>

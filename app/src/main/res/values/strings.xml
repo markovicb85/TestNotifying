@@ -3,7 +3,7 @@
     <string name="FCM_PREF">com.example.crni.testnotifying.fcm_pref</string>
     <string name="FCM_TOKEN">com.example.crni.testnotifying.fcm_token</string>
     <string name="FCM_NAME">com.example.crni.testnotifying.fcm_name</string>
-    <string name="send_token">SEND TOKEN</string>
+    <string name="send_token">Device registration</string>
     <string name="back">Change device name</string>
     <string name="insert_new_device_name">Insert new device name</string>
     <string name="alarm">Alarm</string>
@@ -21,4 +21,8 @@
     <string name="proba">Ovo je proba dodatnog teksta koji salje neka soba</string>
     <string name="alarm_icon">Alarm icon</string>
     <string name="alarm_name">Alarm name</string>
+    <string name="company_name">Elgrin d.o.o.</string>
+    <string name="company_address">www.elgrin.si</string>
+    <string name="faci_alarm">Faci Alarm</string>
+    <string name="faci_alarm_description">Faci Alarm notification</string>
 </resources>

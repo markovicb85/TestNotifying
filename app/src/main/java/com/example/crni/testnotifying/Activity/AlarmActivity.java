@@ -93,8 +93,10 @@ public class AlarmActivity extends AppCompatActivity implements NavigationView.O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dbHandler.deleteAlarms();
-                        //TODO Ovde puca aplikacija jer u narednom koraku nekma referencu na DBhendler
-                        new AlarmListFragment().showAlarms();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new AlarmListFragment())
+                                .addToBackStack(null)
+                                .commit();
                     }
                 });
                 alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
